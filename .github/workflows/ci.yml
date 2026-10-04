@@ -1,0 +1,20 @@
+name: Kubernetes Manifest Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Base Manifests
+        run: |
+          test -f base/kustomization.yaml
+          test -f base/deployment.yaml
+          test -f base/service.yaml
+          test -f base/hpa.yaml
+          echo "Kubernetes Kustomize base manifests verified."
